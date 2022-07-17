@@ -21,9 +21,14 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/create")
-    public User createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@RequestBody User user){
         log.info("creating user started in Controller");
-        return userService.createUser(user);
+        User newUser = null;
+        newUser =userService.createUser(user);
+        if(newUser == null){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
 
     }
 
@@ -34,20 +39,30 @@ public class UserController {
         if(searchUser.size() <=0){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.of(Optional.of(searchUser));
+        return ResponseEntity.status(HttpStatus.FOUND).body(searchUser);
     }
 
     @GetMapping("/{userId}")
-    public Optional<User> getById(@PathVariable Integer userId){
+    public ResponseEntity<User> getById(@PathVariable Integer userId){
         log.info("Getting User of userId : " + userId);
-        Optional<User> user =userService.getUserById(userId);
-        return user;
+        User user =userService.getUserById(userId);
+        if(user ==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @PutMapping("/update")
-    public User updateUser( @RequestBody User updateUserInfo){
+    public ResponseEntity<User> updateUser( @RequestBody User updateUserInfo){
         log.info("Updating user by userId : " + updateUserInfo.getId() );
-        User Updateduser = userService.updateUser(updateUserInfo);
-        return Updateduser;
+        User updatedUser= null;
+        try{
+         updatedUser = userService.updateUser(updateUserInfo);
+         return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }

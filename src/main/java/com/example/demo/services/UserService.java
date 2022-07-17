@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface UserService {
     public User createUser(User user);
     public List<User> search();
-    public Optional<User> getUserById(Integer id);
+    public User getUserById(Integer id);
     public User updateUser( User updateInfo);
 }

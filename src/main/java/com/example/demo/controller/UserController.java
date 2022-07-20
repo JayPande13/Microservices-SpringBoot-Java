@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(MicroservicesConstants.BASE_URL+"/user")
@@ -24,6 +23,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user){
         log.info("creating user started in Controller");
         User newUser = null;
+        System.out.println(user);
         newUser =userService.createUser(user);
         if(newUser == null){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

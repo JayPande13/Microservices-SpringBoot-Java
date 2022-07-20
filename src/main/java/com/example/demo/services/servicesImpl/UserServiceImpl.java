@@ -1,19 +1,30 @@
 package com.example.demo.services.servicesImpl;
 
+import com.example.demo.entities.Certification;
 import com.example.demo.entities.User;
+import com.example.demo.repositories.CertificationRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-  @Autowired UserRepository userRepository;
+  @Autowired
+  UserRepository userRepository;
+
+  @Autowired
+  CertificationRepository certificationRepository;
+
+  ModelMapper modelMapper;
 
   @Override
   public User createUser(User user) {
@@ -27,7 +38,6 @@ public class UserServiceImpl implements UserService {
       return savedUser;
     }
   }
-
   @Override
   public List<User> search() {
     log.info("Returning User from Service IMPl");

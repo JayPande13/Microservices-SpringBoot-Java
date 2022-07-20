@@ -3,6 +3,7 @@ package com.example.demo.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +13,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Builder
-@Generated
 @Table(name ="users")
 
 public class User {
@@ -23,4 +23,10 @@ public class User {
     private String name;
     private String city;
     private String status;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_and_certification" ,joinColumns = {
+            @JoinColumn(name = "user_id")},inverseJoinColumns = {
+            @JoinColumn(name = "certification_id")})
+    private List<Certification> certifications;
     }

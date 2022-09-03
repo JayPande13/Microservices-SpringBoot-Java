@@ -19,7 +19,7 @@ public class CertificateController {
     @Autowired
     CertificationService certificationService;
 
-    @PostMapping("/create")
+    @PostMapping("/cert/create")
     public ResponseEntity<Certification> createCertificate(@RequestBody Certification newCert){
         log.info("Started Creating Certification in Controller");
         Certification certification = null;

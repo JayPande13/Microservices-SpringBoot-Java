@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(MicroservicesConstants.BASE_URL+"/user")
 @Slf4j
+@CrossOrigin
 public class UserController {
 
     @Autowired

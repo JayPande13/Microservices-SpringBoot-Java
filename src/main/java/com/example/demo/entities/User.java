@@ -21,12 +21,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    private String city;
-    private String status;
+    private String email;
+    private String phone;
+    private String password;
+    private String confirmPassword;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_and_certification" ,joinColumns = {
-            @JoinColumn(name = "user_id")},inverseJoinColumns = {
-            @JoinColumn(name = "certification_id")})
-    private List<Certification> certifications;
     }

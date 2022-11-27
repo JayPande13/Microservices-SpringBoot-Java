@@ -5,14 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserDto {
-    private int id;
-    private String name;
-    private String city;
-    private String status;
+public class LoginDto {
 
+    private String email;
+    private String password;
 }

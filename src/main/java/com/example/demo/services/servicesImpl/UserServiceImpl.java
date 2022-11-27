@@ -1,5 +1,6 @@
 package com.example.demo.services.servicesImpl;
 
+import com.example.demo.dto.LoginDto;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.CertificationRepository;
 import com.example.demo.repositories.UserRepository;
@@ -50,6 +51,20 @@ public class UserServiceImpl implements UserService {
       e.printStackTrace();
     }
     return Founduser;
+  }
+  @Override
+  public User loginUser(LoginDto login) throws Exception {
+    log.info("Finding user in Service IMPL");
+    User foundUser = null;
+    try {
+      foundUser = userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
+      if (foundUser == null) {
+       throw new Exception("User Not Found");
+      }
+    } catch (Exception e) {
+      throw new Exception(e);
+    }
+    return foundUser;
   }
 
   @Override

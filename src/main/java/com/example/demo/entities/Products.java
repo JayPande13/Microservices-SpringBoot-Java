@@ -7,24 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
-@Entity
 @Data
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
+@AllArgsConstructor
+@Entity
 @Builder
-public class Certification {
+public class Products {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    private String name;
-    private String code;
+    Integer productId;
+    String productName;
+    String productImage;
+    String productDesc;
+    Integer productPrice;
 
 }
-
-
-

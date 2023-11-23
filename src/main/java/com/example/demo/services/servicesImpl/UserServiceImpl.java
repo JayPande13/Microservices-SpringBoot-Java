@@ -1,8 +1,7 @@
 package com.example.demo.services.servicesImpl;
 
-import com.example.demo.dto.LoginDto;
+import com.example.demo.services.dto.LoginDto;
 import com.example.demo.entities.User;
-import com.example.demo.repositories.CertificationRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +16,6 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   UserRepository userRepository;
-
-  @Autowired
-  CertificationRepository certificationRepository;
 
   @Override
   public User createUser(User user) {

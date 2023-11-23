@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.MicroservicesConstants;
-import com.example.demo.dto.LoginDto;
+import com.example.demo.services.dto.BaseResponseDto;
+import com.example.demo.services.dto.LoginDto;
 import com.example.demo.entities.User;
 import com.example.demo.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(MicroservicesConstants.BASE_URL + "/user")
@@ -23,15 +23,22 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<BaseResponseDto<User>> createUser(@RequestBody User user) {
         log.info("creating user started in Controller");
         User newUser = null;
         System.out.println(user);
         newUser = userService.createUser(user);
         if (newUser == null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return new ResponseEntity<>(
+                    BaseResponseDto.<User>builder().message("User Not Created")
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).content(null).build(), HttpStatus.INTERNAL_SERVER_ERROR);
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }else {
+            return new ResponseEntity<BaseResponseDto<User>>(
+                    BaseResponseDto.<User>builder().message(HttpStatus.OK.toString())
+                            .statusCode(HttpStatus.CREATED.value()).content(newUser).build(), HttpStatus.OK);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
 
     }
 
@@ -56,13 +63,17 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> getById(@RequestBody LoginDto login) throws Exception {
+    public ResponseEntity<BaseResponseDto<User>> getById(@RequestBody LoginDto login) throws Exception {
         log.info("Getting User of userId : " + login);
         User loginMessage = userService.loginUser(login);
         if (loginMessage != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(loginMessage);
+            return new ResponseEntity<BaseResponseDto<User>>(
+                    BaseResponseDto.<User>builder().message(HttpStatus.OK.toString())
+                            .statusCode(HttpStatus.FOUND.value()).content(loginMessage).build(), HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            return new ResponseEntity<BaseResponseDto<User>>(
+                    BaseResponseDto.<User>builder().message(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                            .statusCode(HttpStatus.NO_CONTENT.value()).content(null).build(), HttpStatus.OK);
         }
     }
 

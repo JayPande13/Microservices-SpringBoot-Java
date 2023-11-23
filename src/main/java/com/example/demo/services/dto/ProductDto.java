@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.services.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LoginDto {
+public class ProductDto {
+    String productName;
+    String productImage;
+    String productDesc;
+    Integer productPrice;
 
-    private String email;
-    private String password;
 }
